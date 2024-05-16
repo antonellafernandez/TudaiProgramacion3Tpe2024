@@ -1,3 +1,5 @@
+package main;
+
 public class Procesador {
     private String id_procesador;
     private String codigo;

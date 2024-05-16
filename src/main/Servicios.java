@@ -1,3 +1,5 @@
+package main;
+
 import utils.CSVReader;
 
 import java.util.HashMap;
@@ -7,7 +9,7 @@ import java.util.Map;
 
 /**
  * NO modificar la interfaz de esta clase ni sus métodos públicos.
- * Sólo se podrá adaptar el nombre de la clase "Tarea" según sus decisiones
+ * Sólo se podrá adaptar el nombre de la clase "main.Tarea" según sus decisiones
  * de implementación.
  */
 public class Servicios {

@@ -5,9 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
-import Procesador;
-import Tarea;
+import main.Procesador;
+import main.Tarea;
 
 public class CSVReader {
 
