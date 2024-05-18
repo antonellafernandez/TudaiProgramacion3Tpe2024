@@ -1,6 +1,6 @@
 package main;
 
-public class Tarea {
+public class Tarea implements Comparable<Tarea> {
     private String id;
     private String nombre;
     private Integer tiempo;
@@ -59,5 +59,11 @@ public class Tarea {
     public String toString() {
         return "Tarea [id=" + id + ", nombre=" + nombre + ", tiempo=" + tiempo + ", critica=" + critica + ", prioridad="
                 + prioridad + "]";
+    }
+
+    @Override
+    public int compareTo(Tarea otraTarea) {
+        // Comparar las prioridades de las tareas
+        return Integer.compare(this.getPrioridad(), otraTarea.getPrioridad());
     }
 }
