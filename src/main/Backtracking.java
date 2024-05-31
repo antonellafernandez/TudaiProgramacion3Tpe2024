@@ -7,8 +7,8 @@ import java.util.List;
 public class Backtracking extends Solucion {
     private int cantidadEstadosGenerados;
 
-    public Backtracking(int tiempoMaximo) {
-        super(tiempoMaximo);
+    public Backtracking(int tiempoMaximo, HashMap<String, Procesador> procesadores) {
+        super(tiempoMaximo, procesadores);
         cantidadEstadosGenerados = 0;
     }
 
@@ -18,11 +18,6 @@ public class Backtracking extends Solucion {
 
     @Override
     public Solucion resolver(int tiempoMaximoNoRefrigerado, HashMap<String, Procesador> procesadores, ArrayList<Tarea> tareas) {
-        // Inicializar asignación para cada procesador
-        for (Procesador procesador : procesadores.values()) {
-            this.getAsignacion().put(procesador, new ArrayList<>());
-        }
-
         ArrayList<Procesador> listaProcesadores = new ArrayList<>(procesadores.values());
         backtrack(0, listaProcesadores, tareas, tiempoMaximoNoRefrigerado);
 

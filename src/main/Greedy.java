@@ -6,8 +6,8 @@ import java.util.HashMap;
 public class Greedy extends Solucion {
     private int cantidadCandidatosConsiderados;
 
-    public Greedy(int tiempoMaximo) {
-        super(tiempoMaximo);
+    public Greedy(int tiempoMaximo, HashMap<String, Procesador> procesadores) {
+        super(tiempoMaximo, procesadores);
         cantidadCandidatosConsiderados = 0;
     }
 

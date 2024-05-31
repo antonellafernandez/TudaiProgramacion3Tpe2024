@@ -9,9 +9,14 @@ public abstract class Solucion {
     private Map<Procesador, List<Tarea>> asignacion;
     private int tiempoMaximo;
 
-    public Solucion(int tiempoMaximo) {
+    public Solucion(int tiempoMaximo, HashMap<String, Procesador> procesadores) {
         this.asignacion = new HashMap<>();
         this.tiempoMaximo = tiempoMaximo;
+
+        // Inicializar asignación para cada procesador
+        for (Procesador procesador : procesadores.values()) {
+            this.getAsignacion().put(procesador, new ArrayList<>());
+        }
     }
 
     public Map<Procesador, List<Tarea>> getAsignacion() {
