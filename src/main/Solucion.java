@@ -26,7 +26,7 @@ public abstract class Solucion {
         this.tiempoMaximo = tiempoMaximo;
     }
 
-    public abstract Solucion resolver(int tiempo_maximo_no_refrigerado, HashMap<String,
+    public abstract Solucion resolver(int tiempoMaximoNoRefrigerado, HashMap<String,
             Procesador> procesadores, ArrayList<Tarea> tareas);
 
     @Override

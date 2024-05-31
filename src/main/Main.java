@@ -19,5 +19,17 @@ public class Main {
         System.out.println("Servicio 3");
         System.out.println(servicios.servicio3(69,100));
         System.out.println();
+
+        // Backtracking
+        Solucion solucionB = servicios.ejecutarBacktracking(0, 50);
+
+        // Imprimir la Solución Backtracking
+        System.out.println(solucionB);
+
+        // Greedy
+        Solucion solucionG = servicios.ejecutarGreedy(0, 50);
+
+        // Imprimir la Solución Greedy
+        System.out.println(solucionG);
     }
 }
