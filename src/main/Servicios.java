@@ -82,11 +82,8 @@ public class Servicios {
     }
 
     /**
-     * Complejidad temporal del servicio 3: O(log N)
-     * donde N es el número de nodos del árbol
-     *
-     * Hicimos un árbol para mejorar la complejidad.
-     * En el peor de los casos la complejidad es O(N) pero mejora la búsqueda.
+     * Complejidad temporal del servicio 3: O(N)
+     * donde N es el número de nodos del árbol.
      */
     public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
         return tareaBST.getTareasEnRango(prioridadInferior, prioridadSuperior);
