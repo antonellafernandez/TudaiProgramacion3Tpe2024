@@ -88,4 +88,22 @@ public class Servicios {
     public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
         return tareaBST.getTareasEnRango(prioridadInferior, prioridadSuperior);
     }
+
+    /**
+     * <<Breve explicación de la estrategia de resolución>>
+     */
+    public Solucion ejecutarBacktracking(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
+        Backtracking backtracking = new Backtracking(tiempoMaximo);
+        ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
+        return backtracking.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
+    }
+
+    /**
+     * <<Breve explicación de la estrategia de resolución>>
+     */
+    public Solucion ejecutarGreedy(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
+        Greedy greedy = new Greedy(tiempoMaximo);
+        ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
+        return greedy.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
+    }
 }
