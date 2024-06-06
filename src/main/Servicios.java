@@ -14,8 +14,8 @@ import java.util.Map;
  * de implementación.
  */
 public class Servicios {
-    private Map<String, Tarea> tareas;
-    private Map<String, Procesador> procesadores;
+    private HashMap<String, Tarea> tareas;
+    private HashMap<String, Procesador> procesadores;
 
     // Listas para almacenar las tareas por su tipo de criticidad
     private List<Tarea> tareasFalse;
@@ -92,12 +92,12 @@ public class Servicios {
     /**
      * <<Breve explicación de la estrategia de resolución>>
      */
-    public Solucion ejecutarBacktracking(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
+/*    public Solucion ejecutarBacktracking(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
         Backtracking backtracking = new Backtracking(tiempoMaximo, procesadores);
         ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
         return backtracking.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
     }
-
+*/
     /**
      * <<Breve explicación de la estrategia de resolución>>
      */
