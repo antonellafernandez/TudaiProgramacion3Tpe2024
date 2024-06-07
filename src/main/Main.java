@@ -3,6 +3,7 @@ package main;
 public class Main {
     public static void main(String[] args) {
         Servicios servicios = new Servicios("./src/datasets/Tareas.csv","./src/datasets/Procesadores.csv");
+        Servicios2 servicios2 = new Servicios2("./src/datasets/Tareas.csv","./src/datasets/Procesadores.csv");
 
         // Servicio 1  : Dado un identificador de tarea obtener  toda la información de la tarea asociada.
         System.out.println("Servicio 1");
@@ -21,13 +22,13 @@ public class Main {
         System.out.println();
 
         // Backtracking
-        Solucion solucionB = servicios.ejecutarBacktracking(0, 50);
+        Solucion solucionB = servicios2.ejecutarBacktracking(0, 50);
 
         // Imprimir la Solución Backtracking
         System.out.println(solucionB);
 
         // Greedy
-        Solucion solucionG = servicios.ejecutarGreedy(0, 50);
+        Solucion solucionG = servicios2.ejecutarGreedy(0, 50);
 
         // Imprimir la Solución Greedy
         System.out.println(solucionG);

@@ -3,10 +3,8 @@ package main;
 import utils.CSVReader;
 
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * NO modificar la interfaz de esta clase ni sus métodos públicos.
@@ -87,23 +85,5 @@ public class Servicios {
      */
     public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
         return tareaBST.getTareasEnRango(prioridadInferior, prioridadSuperior);
-    }
-
-    /**
-     * <<Breve explicación de la estrategia de resolución>>
-     */
-/*    public Solucion ejecutarBacktracking(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
-        Backtracking backtracking = new Backtracking(tiempoMaximo, procesadores);
-        ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
-        return backtracking.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
-    }
-*/
-    /**
-     * <<Breve explicación de la estrategia de resolución>>
-     */
-    public Solucion ejecutarGreedy(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
-        Greedy greedy = new Greedy(tiempoMaximo, procesadores);
-        ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
-        return greedy.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Greedy extends Solucion {
+public class Greedy {
     private int cantidadCandidatosConsiderados;
 
     public Greedy(int tiempoMaximo, HashMap<String, Procesador> procesadores) {

@@ -1,22 +1,18 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Solucion {
+public class Solucion {
     private Map<Procesador, List<Tarea>> asignacion;
     private int tiempoMaximo;
+    private int costoSolucion;
 
-    public Solucion(int tiempoMaximo, HashMap<String, Procesador> procesadores) {
-        this.asignacion = new HashMap<>();
+    public Solucion(Map<Procesador, List<Tarea>> asignacion, int tiempoMaximo, int costoSolucion) {
+        this.asignacion = new HashMap<>(asignacion);
         this.tiempoMaximo = tiempoMaximo;
-
-        // Inicializar asignación para cada procesador
-        for (Procesador procesador : procesadores.values()) {
-            this.getAsignacion().put(procesador, new ArrayList<>());
-        }
+        this.costoSolucion = costoSolucion;
     }
 
     public Map<Procesador, List<Tarea>> getAsignacion() {
@@ -31,12 +27,18 @@ public abstract class Solucion {
         this.tiempoMaximo = tiempoMaximo;
     }
 
-    public abstract Solucion resolver(int tiempoMaximoNoRefrigerado, HashMap<String,
-            Procesador> procesadores, ArrayList<Tarea> tareas);
+    public int getCostoSolucion() {
+        return costoSolucion;
+    }
+
+    public void setCostoSolucion(int costoSolucion) {
+        this.costoSolucion = costoSolucion;
+    }
 
     @Override
     public String toString() {
-        return "Cada procesador con las tareas asignadas: " + asignacion +
-                ", Tiempo máximo de ejecución: " + tiempoMaximo;
+        return "Cada procesador con las tareas asignadas: " + this.getAsignacion() +
+                ", Tiempo máximo de ejecución: " + this.getTiempoMaximo() +
+                ", Costo de la solución: " + this.getCostoSolucion();
     }
 }
