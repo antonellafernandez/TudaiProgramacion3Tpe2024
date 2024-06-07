@@ -22,13 +22,13 @@ public class Main {
         System.out.println();
 
         // Backtracking
-        Solucion solucionB = servicios2.ejecutarBacktracking(0, 50);
+        Solucion solucionB = servicios2.backtracking(0, 50);
 
         // Imprimir la Solución Backtracking
         System.out.println(solucionB);
 
         // Greedy
-        Solucion solucionG = servicios2.ejecutarGreedy(0, 50);
+        Solucion solucionG = servicios2.greedy(0, 50);
 
         // Imprimir la Solución Greedy
         System.out.println(solucionG);
