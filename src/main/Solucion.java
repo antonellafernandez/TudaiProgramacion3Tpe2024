@@ -37,8 +37,8 @@ public class Solucion {
 
     @Override
     public String toString() {
-        return "Cada procesador con las tareas asignadas: " + this.getAsignacion() +
-                ", Tiempo máximo de ejecución: " + this.getTiempoMaximo() +
-                ", Costo de la solución: " + this.getCostoSolucion();
+        return "Cada procesador con las tareas asignadas: \n" + this.getAsignacion() +
+                "\n\nTiempo máximo de ejecución: " + this.getTiempoMaximo() +
+                "\n\nCosto de la solución: " + this.getCostoSolucion();
     }
 }

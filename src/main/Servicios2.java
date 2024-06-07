@@ -26,19 +26,22 @@ public class Servicios2 {
 
     /**
      * <<Breve explicación de la estrategia de resolución>>
-     */
+     */ /*
     public Solucion backtracking(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
         Backtracking backtracking = new Backtracking(tiempoMaximo, procesadores);
         ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
         return backtracking.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
     }
-
+*/
     /**
      * <<Breve explicación de la estrategia de resolución>>
      */
-    public Solucion greedy(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
-        Greedy greedy = new Greedy(tiempoMaximo, procesadores);
+    public Solucion greedy(int tiempoMaximoNoRefrigerado) {
+        Greedy greedy = new Greedy();
+
         ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
-        return greedy.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
+        ArrayList<Procesador> listaProcesadores = new ArrayList<>(procesadores.values());
+
+        return greedy.resolver(tiempoMaximoNoRefrigerado, listaTareas, listaProcesadores);
     }
 }
