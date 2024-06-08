@@ -16,25 +16,34 @@ public class Greedy {
         return cantidadCandidatosConsiderados;
     }
 
-    public Solucion resolver(int tiempoMaximoNoRefrigerado, ArrayList<Tarea> listaTareas, ArrayList<Procesador> listaProcesadores) {
+    // Complejidad: O(n * m) donde n es el número de tareas y m es el número de procesadores
+    public Solucion resolver(int tiempoMaximoNoRefrigerado, List<Tarea> listaTareas, List<Procesador> listaProcesadores) {
         Map<Procesador, List<Tarea>> asignacion = new HashMap<>();
+        Map<Procesador, Integer> tiemposProcesadores = new HashMap<>();
 
+        // Inicializar las asignaciones y los tiempos de procesadores
         for (Procesador procesador : listaProcesadores) {
             asignacion.put(procesador, new ArrayList<>());
+            tiemposProcesadores.put(procesador, 0);
         }
 
         Solucion s = new Solucion(asignacion, 0, 0); // Conjunto solución, inicialmente vacío
 
+        // Iterar sobre cada tarea
         for (Tarea tarea : listaTareas) {
             Procesador mejorProcesador = null;
             int minTiempo = Integer.MAX_VALUE;
 
+            // Evaluar cada procesador para la tarea actual
             for (Procesador procesador : listaProcesadores) {
                 cantidadCandidatosConsiderados++;
+                List<Tarea> tareasAsignadas = s.getAsignacion().get(procesador);
 
-                if (puedeAsignar(tarea, procesador, tiempoMaximoNoRefrigerado, s.getAsignacion())) {
-                    int tiempoProcesador = getTiempoProcesador(procesador, s.getAsignacion());
+                // Verificar si se puede asignar la tarea al procesador actual
+                if (puedeAsignar(tarea, procesador, tareasAsignadas, tiempoMaximoNoRefrigerado)) {
+                    int tiempoProcesador = tiemposProcesadores.get(procesador);
 
+                    // Encontrar el procesador con el mínimo tiempo acumulado
                     if (tiempoProcesador < minTiempo) {
                         minTiempo = tiempoProcesador;
                         mejorProcesador = procesador;
@@ -42,8 +51,10 @@ public class Greedy {
                 }
             }
 
+            // Asignar la tarea al mejor procesador encontrado
             if (mejorProcesador != null) {
                 asignarTarea(tarea, mejorProcesador, s.getAsignacion());
+                tiemposProcesadores.put(mejorProcesador, tiemposProcesadores.get(mejorProcesador) + tarea.getTiempo());
             } else {
                 System.out.println("No se pudo asignar la tarea: " + tarea);
             }
@@ -51,9 +62,8 @@ public class Greedy {
 
         // Calcular el tiempo máximo de ejecución final
         int totalTiempoFinal = 0;
-
         for (Procesador procesador : listaProcesadores) {
-            totalTiempoFinal = Math.max(totalTiempoFinal, getTiempoProcesador(procesador, s.getAsignacion()));
+            totalTiempoFinal = Math.max(totalTiempoFinal, tiemposProcesadores.get(procesador));
         }
 
         s.setTiempoMaximo(totalTiempoFinal);
@@ -62,32 +72,55 @@ public class Greedy {
         return s;
     }
 
-    private boolean puedeAsignar(Tarea tarea, Procesador procesador, int tiempoMaximoNoRefrigerado, Map<Procesador, List<Tarea>> asignacion) {
-        // Verificar si el procesador no refrigerado no excede el tiempo máximo permitido
-        if (!procesador.getRefrigerado() && getTiempoProcesador(procesador, asignacion) + tarea.getTiempo() > tiempoMaximoNoRefrigerado) {
+    // Complejidad: O(n) donde n es el número de tareas asignadas al procesador
+    private boolean puedeAsignar(Tarea tarea, Procesador procesador, List<Tarea> tareasAsignadas, int tiempoMaximoNoRefrigerado) {
+        if (tareasAsignadas == null) {
+            tareasAsignadas = new ArrayList<>();
+        }
+
+        // Verificar si el procesador ya tiene más de dos tareas críticas asignadas
+        if (tieneMasDeDosTareasCriticas(tareasAsignadas)) {
             return false;
         }
 
-        // Verificar si la última tarea asignada al procesador es crítica
-        // y si esta nueva tarea es crítica también
-        if (tarea.getCritica() && ultimaTareaAsignadaEsCritica(procesador, asignacion)) {
-            return false;
+        // Verificar si el procesador es refrigerado
+        if (procesador.getRefrigerado()) {
+            return true;
+        } else {
+            // Calcular el tiempo total de ejecución si se añade una nueva tarea
+            int tiempoTotal = calcularTiempoTotal(tareasAsignadas) + tarea.getTiempo();
+            return tiempoTotal <= tiempoMaximoNoRefrigerado; // Verificar si el tiempo total no excede el máximo permitido sin refrigeración
         }
-
-        return true;
     }
 
-    private boolean ultimaTareaAsignadaEsCritica(Procesador procesador, Map<Procesador, List<Tarea>> asignacion) {
-        List<Tarea> tareasAsignadas = asignacion.get(procesador);
+    // Complejidad: O(n) donde n es el número de tareas asignadas al procesador
+    public boolean tieneMasDeDosTareasCriticas(List<Tarea> tareasAsignadas) {
+        int cantidadTareasCriticas = 0;
 
-        if (!tareasAsignadas.isEmpty()) {
-            Tarea ultimaTareaAsignada = tareasAsignadas.get(tareasAsignadas.size() - 1);
-            return ultimaTareaAsignada.getCritica();
+        for (Tarea tarea : tareasAsignadas) {
+            if (tarea.getCritica()) {
+                cantidadTareasCriticas++;
+
+                if (cantidadTareasCriticas >= 2) {
+                    return true;
+                }
+            }
         }
 
         return false;
     }
 
+    // Complejidad: O(n) donde n es el número de tareas
+    private int calcularTiempoTotal(List<Tarea> tareas) {
+        int tiempoTotal = 0;
+
+        for (Tarea t : tareas) {
+            tiempoTotal += t.getTiempo();
+        }
+        return tiempoTotal;
+    }
+
+    // Complejidad: O(1) debido a que la operación de obtención de valores de un mapa es constante en promedio
     private int getTiempoProcesador(Procesador procesador, Map<Procesador, List<Tarea>> asignacion) {
         int tiempoTotal = 0;
 
@@ -98,6 +131,7 @@ public class Greedy {
         return tiempoTotal;
     }
 
+    // Complejidad: O(1) ya que solo se agrega una tarea a la lista
     private void asignarTarea(Tarea tarea, Procesador procesador, Map<Procesador, List<Tarea>> asignacion) {
         List<Tarea> tareasAsignadas = asignacion.get(procesador);
         tareasAsignadas.add(tarea);

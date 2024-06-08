@@ -23,8 +23,8 @@ public class Servicios {
     private BinarySearchTreeTarea tareaBST;
 
     /**
-     * Complejidad temporal del constructor: O(T + P)
-     * donde T es el número de tareas y P es el número de procesadores.
+     * Complejidad temporal del constructor: O(n + m)
+     * donde n es el número de tareas y m es el número de procesadores.
      */
     public Servicios(String pathTareas, String pathProcesadores) {
         procesadores = new HashMap<>();
@@ -80,8 +80,8 @@ public class Servicios {
     }
 
     /**
-     * Complejidad temporal del servicio 3: O(N)
-     * donde N es el número de nodos del árbol.
+     * Complejidad temporal del servicio 3: O(n)
+     * donde n es el número de nodos del árbol.
      */
     public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
         return tareaBST.getTareasEnRango(prioridadInferior, prioridadSuperior);
