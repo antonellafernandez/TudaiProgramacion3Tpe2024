@@ -74,10 +74,6 @@ public class Greedy {
 
     // Complejidad: O(n) donde n es el número de tareas asignadas al procesador
     private boolean puedeAsignar(Tarea tarea, Procesador procesador, List<Tarea> tareasAsignadas, int tiempoMaximoNoRefrigerado) {
-        if (tareasAsignadas == null) {
-            tareasAsignadas = new ArrayList<>();
-        }
-
         // Verificar si el procesador ya tiene más de dos tareas críticas asignadas
         if (tieneMasDeDosTareasCriticas(tareasAsignadas)) {
             return false;
@@ -94,7 +90,7 @@ public class Greedy {
     }
 
     // Complejidad: O(n) donde n es el número de tareas asignadas al procesador
-    public boolean tieneMasDeDosTareasCriticas(List<Tarea> tareasAsignadas) {
+    private boolean tieneMasDeDosTareasCriticas(List<Tarea> tareasAsignadas) {
         int cantidadTareasCriticas = 0;
 
         for (Tarea tarea : tareasAsignadas) {
@@ -117,17 +113,6 @@ public class Greedy {
         for (Tarea t : tareas) {
             tiempoTotal += t.getTiempo();
         }
-        return tiempoTotal;
-    }
-
-    // Complejidad: O(1) debido a que la operación de obtención de valores de un mapa es constante en promedio
-    private int getTiempoProcesador(Procesador procesador, Map<Procesador, List<Tarea>> asignacion) {
-        int tiempoTotal = 0;
-
-        for (Tarea tarea : asignacion.get(procesador)) {
-            tiempoTotal += tarea.getTiempo();
-        }
-
         return tiempoTotal;
     }
 

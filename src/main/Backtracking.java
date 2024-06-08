@@ -21,34 +21,40 @@ public class Backtracking {
         int nroTareaActual = 0;
 
         Map<Procesador, List<Tarea>> asignacionInicial = new HashMap<>();
+        Map<Procesador, Integer> tiempoEjecucionProcesadores = new HashMap<>();
 
         for (Procesador procesador : listaProcesadores) {
             asignacionInicial.put(procesador, new ArrayList<>());
+            tiempoEjecucionProcesadores.put(procesador, 0);
         }
 
-        Solucion s = new Solucion(asignacionInicial, Integer.MAX_VALUE, 0); // Inicializar con valores máximos para encontrar una solución mejor
+        Solucion mejorSolucion = new Solucion(asignacionInicial, Integer.MAX_VALUE, 0); // Inicializar con valores máximos para encontrar una solución mejor
 
-        backtrackingAsignarTareas(nroTareaActual, tiempoMaximoNoRefrigerados, listaTareas, listaProcesadores, asignacionInicial, s);
+        // Verificar la poda antes de empezar la asignación
+        if (!poda(tiempoEjecucionProcesadores, mejorSolucion)) {
+            backtrackingAsignarTareas(nroTareaActual, tiempoMaximoNoRefrigerados, listaTareas, listaProcesadores, asignacionInicial, tiempoEjecucionProcesadores, mejorSolucion);
+        }
 
-        return s;
+        return mejorSolucion;
+    }
+
+
+    // Método de poda
+    // Comlejidad: O(m) donde m es el número de procesadores
+    private boolean poda(Map<Procesador, Integer> tiempoEjecucionProcesadores, Solucion mejorSolucion) {
+        int tiempoActual = calcularTiempoEjecucion(tiempoEjecucionProcesadores);
+        return tiempoActual >= mejorSolucion.getTiempoMaximo();
     }
 
     // Complejidad: en el peor de los casos O(m^n)
     private void backtrackingAsignarTareas(int nroTareaActual, int tiempoMaximoNoRefrigerados, List<Tarea> listaTareas, List<Procesador> listaProcesadores,
-                                           Map<Procesador, List<Tarea>> asignacionActual, Solucion mejorSolucion) {
+                                           Map<Procesador, List<Tarea>> asignacionActual, Map<Procesador, Integer> tiempoEjecucionProcesadores, Solucion mejorSolucion) {
 
         this.cantidadEstadosGenerados++;
         mejorSolucion.setCostoSolucion(this.cantidadEstadosGenerados);
 
-        // Calcular el tiempo de ejecución actual
-        int tiempoActual = calcularTiempoEjecucion(asignacionActual);
-
-        // Poda temprana: si el tiempo actual supera el tiempo máximo registrado en la mejor solución, detener la exploración
-        if (tiempoActual >= mejorSolucion.getTiempoMaximo()) {
-            return;
-        }
-
         if (nroTareaActual == listaTareas.size()) {
+            int tiempoActual = calcularTiempoEjecucion(tiempoEjecucionProcesadores);
             if (tiempoActual < mejorSolucion.getTiempoMaximo()) {
                 mejorSolucion.setAsignacion(new HashMap<>(asignacionActual)); // Copiar la asignación actual
                 mejorSolucion.setTiempoMaximo(tiempoActual);
@@ -62,39 +68,31 @@ public class Backtracking {
 
                 if (puedeAsignar(tareaActual, procesadorActual, tareasAsignadas, tiempoMaximoNoRefrigerados)) {
                     // Asignar la tarea al procesador
-                    asignarTarea(tareaActual, procesadorActual, asignacionActual);
+                    asignarTarea(tareaActual, procesadorActual, asignacionActual, tiempoEjecucionProcesadores);
 
-                    // Llamar recursivamente para la siguiente tarea
-                    backtrackingAsignarTareas(nroTareaActual + 1, tiempoMaximoNoRefrigerados, listaTareas, listaProcesadores, asignacionActual, mejorSolucion);
+                    // Verificar la poda antes de la llamada recursiva
+                    if (!poda(tiempoEjecucionProcesadores, mejorSolucion)) {
+                        // Llamar recursivamente para la siguiente tarea
+                        backtrackingAsignarTareas(nroTareaActual + 1, tiempoMaximoNoRefrigerados, listaTareas, listaProcesadores, asignacionActual, tiempoEjecucionProcesadores, mejorSolucion);
+                    }
 
                     // Desasignar la tarea cuando regresa de la recursión
-                    desasignarTarea(tareaActual, procesadorActual, asignacionActual);
+                    desasignarTarea(tareaActual, procesadorActual, asignacionActual, tiempoEjecucionProcesadores);
                 }
             }
         }
     }
 
-    // Complejidad: O(m * n) donde m es el número de procesadores y n es el número de tareas asignadas a un procesador
-    private int calcularTiempoEjecucion(Map<Procesador, List<Tarea>> asignacionActual) {
-        int maxTiempo = 0;
-
-        for (List<Tarea> tareas : asignacionActual.values()) {
-            int tiempoTotal = calcularTiempoTotal(tareas);
-            if (tiempoTotal > maxTiempo) {
-                maxTiempo = tiempoTotal;
-            }
-        }
-        return maxTiempo;
-    }
-
-    // Complejidad: O(1) ya que solo elimina un elemento de la lista
-    private void desasignarTarea(Tarea tarea, Procesador procesador, Map<Procesador, List<Tarea>> asignacionActual) {
+    // Complejidad: O(1) ya que solo elimina un elemento de la lista y resta el tiempo de la tarea al tiempo de ejecución total
+    private void desasignarTarea(Tarea tarea, Procesador procesador, Map<Procesador, List<Tarea>> asignacionActual, Map<Procesador, Integer> tiempoEjecucionProcesadores) {
         asignacionActual.get(procesador).remove(tarea);
+        tiempoEjecucionProcesadores.put(procesador, tiempoEjecucionProcesadores.get(procesador) - tarea.getTiempo());
     }
 
-    // Complejidad: O(1) ya que solo agrega un elemento a la lista
-    private void asignarTarea(Tarea tarea, Procesador procesador, Map<Procesador, List<Tarea>> asignacionActual) {
+    // Complejidad: O(1) ya que solo agrega un elemento a la lista y suma el tiempo de la tarea al tiempo de ejecución total
+    private void asignarTarea(Tarea tarea, Procesador procesador, Map<Procesador, List<Tarea>> asignacionActual, Map<Procesador, Integer> tiempoEjecucionProcesadores) {
         asignacionActual.get(procesador).add(tarea);
+        tiempoEjecucionProcesadores.put(procesador, tiempoEjecucionProcesadores.get(procesador) + tarea.getTiempo());
     }
 
     // Complejidad: O(n) donde n es el número de tareas asignadas al procesador
@@ -142,5 +140,17 @@ public class Backtracking {
             tiempoTotal += t.getTiempo();
         }
         return tiempoTotal;
+    }
+
+    // Complejidad: O(1) ya que solo se itera sobre los procesadores
+    private int calcularTiempoEjecucion(Map<Procesador, Integer> tiempoEjecucionProcesadores) {
+        int maxTiempo = 0;
+
+        for (int tiempoTotal : tiempoEjecucionProcesadores.values()) {
+            if (tiempoTotal > maxTiempo) {
+                maxTiempo = tiempoTotal;
+            }
+        }
+        return maxTiempo;
     }
 }
