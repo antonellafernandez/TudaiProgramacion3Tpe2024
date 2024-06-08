@@ -20,14 +20,14 @@ public class Main {
         System.out.println("==================== Servicio 3 ====================");
         System.out.println(servicios.servicio3(69,100));
         System.out.println();
-/*
+
         // Backtracking
         Solucion solucionB = servicios2.backtracking(50);
 
         // Imprimir la Solución Backtracking
         System.out.println("==================== Solución Backtracking ====================");
         System.out.println(solucionB);
-*/
+
         // Greedy
         Solucion solucionG = servicios2.greedy(50);
 

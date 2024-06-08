@@ -26,13 +26,16 @@ public class Servicios2 {
 
     /**
      * <<Breve explicación de la estrategia de resolución>>
-     */ /*
-    public Solucion backtracking(int tiempoMaximo, int tiempoMaximoNoRefrigerado) {
-        Backtracking backtracking = new Backtracking(tiempoMaximo, procesadores);
+     */
+    public Solucion backtracking(int tiempoMaximoNoRefrigerado) {
+        Backtracking backtracking = new Backtracking();
+
         ArrayList<Tarea> listaTareas = new ArrayList<>(tareas.values());
-        return backtracking.resolver(tiempoMaximoNoRefrigerado, new HashMap<>(procesadores), listaTareas);
+        ArrayList<Procesador> listaProcesadores = new ArrayList<>(procesadores.values());
+
+        return backtracking.resolver(tiempoMaximoNoRefrigerado, listaTareas, listaProcesadores);
     }
-*/
+
     /**
      * <<Breve explicación de la estrategia de resolución>>
      */

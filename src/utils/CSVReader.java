@@ -29,8 +29,8 @@ public class CSVReader {
             Integer tiempo = Integer.parseInt(line[2].trim());
             Boolean critica = Boolean.parseBoolean(line[3].trim());
             Integer prioridad = Integer.parseInt(line[4].trim());
-            // Aca instanciar lo que necesiten en base a los datos leidos
 
+            // Instanciar y agregar Tarea
             Tarea tarea = new Tarea(id, nombre, tiempo, critica, prioridad);
             tareas.put(id, tarea);
         }
@@ -49,8 +49,8 @@ public class CSVReader {
             String codigo = line[1].trim();
             Boolean refrigerado = Boolean.parseBoolean(line[2].trim());
             Integer anio = Integer.parseInt(line[3].trim());
-            // Aca instanciar lo que necesiten en base a los datos leidos
 
+            // Instanciar y agregar Procesador
             Procesador procesador = new Procesador(id, codigo, refrigerado, anio);
             procesadores.put(id, procesador);
         }

@@ -19,6 +19,10 @@ public class Solucion {
         return asignacion;
     }
 
+    public void setAsignacion(Map<Procesador, List<Tarea>> asignacion) {
+        this.asignacion = asignacion;
+    }
+
     public int getTiempoMaximo() {
         return tiempoMaximo;
     }
