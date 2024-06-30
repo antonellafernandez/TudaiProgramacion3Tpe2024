@@ -2,8 +2,8 @@ package main;
 
 public class Main {
     public static void main(String[] args) {
-        Servicios servicios = new Servicios("./src/datasets/Tareas.csv","./src/datasets/Procesadores.csv");
-        Servicios2 servicios2 = new Servicios2("./src/datasets/Tareas.csv","./src/datasets/Procesadores.csv");
+        Servicios servicios = new Servicios("./src/datasets/Procesadores.csv", "./src/datasets/Tareas.csv");
+        Servicios2 servicios2 = new Servicios2("./src/datasets/Procesadores.csv", "./src/datasets/Tareas.csv");
 
         // Servicio 1: Dado un identificador de tarea obtener toda la información de la tarea asociada.
         System.out.println("==================== Servicio 1 ====================");
@@ -18,7 +18,7 @@ public class Main {
 
         // Servicio 3: Obtener todas las tareas entre 2 niveles de prioridad indicados.
         System.out.println("==================== Servicio 3 ====================");
-        System.out.println(servicios.servicio3(69,100));
+        System.out.println(servicios.servicio3(32,91));
         System.out.println();
 
         // Backtracking

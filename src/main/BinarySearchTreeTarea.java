@@ -260,16 +260,16 @@ public class BinarySearchTreeTarea {
                 result.add(node.getValue());
             }
 
-            // Continuar buscando en el subárbol derecho, si la prioridad del nodo actual
+            // Continuar buscando en el subárbol izquierdo, si la prioridad del nodo actual
             // es menor que la prioridad inferior del rango
-            if (prioridad < prioridadInferior) {
-                getTareasEnRango(node.getRight(), prioridadInferior, prioridadSuperior, result);
+            if (prioridad > prioridadInferior) {
+                getTareasEnRango(node.getLeft(), prioridadInferior, prioridadSuperior, result);
             }
 
             // Continuar buscando en el subárbol derecho, si la prioridad del nodo actual
             // es mayor que la prioridad superior del rango
-            if (prioridad > prioridadSuperior) {
-                getTareasEnRango(node.getLeft(), prioridadInferior, prioridadSuperior, result);
+            if (prioridad < prioridadSuperior) {
+                getTareasEnRango(node.getRight(), prioridadInferior, prioridadSuperior, result);
             }
         }
     }

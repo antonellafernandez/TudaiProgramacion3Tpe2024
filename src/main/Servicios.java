@@ -26,7 +26,7 @@ public class Servicios {
      * Complejidad temporal del constructor: O(n + m)
      * donde n es el número de tareas y m es el número de procesadores.
      */
-    public Servicios(String pathTareas, String pathProcesadores) {
+    public Servicios(String pathProcesadores, String pathTareas) {
         procesadores = new HashMap<>();
         tareas = new HashMap<>();
 
