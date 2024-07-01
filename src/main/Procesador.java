@@ -47,7 +47,7 @@ public class Procesador {
 
     @Override
     public String toString() {
-        return "\n\nProcesador [id_procesador=" + id_procesador + ", codigo=" + codigo + ", refrigerado="
-                + refrigerado + ", anio=" + anio + "]\n";
+        return "\nProcesador [id_procesador=" + id_procesador + ", codigo=" + codigo + ", refrigerado="
+                + refrigerado + ", anio=" + anio + "]";
     }
 }
